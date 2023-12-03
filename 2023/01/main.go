@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"log"
-	// "math"
 	"os"
 	"strings"
 )
@@ -32,7 +31,6 @@ func part1(scanner bufio.Scanner) {
 				continue
 			}
 
-			// fmt.Print(int(c) - '0', " ")
 			sum += (int(c) - '0') * 10
 			break
 		}
@@ -43,52 +41,21 @@ func part1(scanner bufio.Scanner) {
 				continue
 			}
 
-			// fmt.Print(int(c) - '0', " ")
 			sum += int(c) - '0'
 			break
 		}
 
-		// fmt.Println(line)
 	}
 
 	fmt.Println(sum)
 }
 
-// var nums = [...]string{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
 var nums = [...]string{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
 
 func part2(scanner bufio.Scanner) {
 	sum := 0
 	for scanner.Scan() {
 		line := scanner.Text()
-
-		/*
-		min := 0
-		minIdx := len(line)
-		max := 0
-		maxIdx := 0
-		for i, num := range(nums) {
-			x := strings.Index(line, num)
-			if x == -1 {
-				continue
-			}
-
-			if x < minIdx {
-				min = i
-				minIdx = x
-			}
-
-			y := strings.LastIndex(line, num)
-			if y >= maxIdx {
-				max = i
-				maxIdx = y
-			}
-		}
-
-		fmt.Printf("min %2d, max %2d, line %s\n", int(math.Mod(float64(min), 9.0)) + 1, int(math.Mod(float64(max), 9.0)) + 1, line)
-		sum += (int(math.Mod(float64(min), 9.0)) + 1) * 10
-		sum += int(math.Mod(float64(max), 9.0)) + 1
-		*/
 
 		var digits []int
 		for i := 0; i < len(line); i++ {
@@ -106,7 +73,7 @@ func part2(scanner bufio.Scanner) {
 			}
 		}
 
-		fmt.Printf("min %2d, max %2d, line %s\n", digits[0], digits[len(digits) - 1], line)
+		// fmt.Printf("min %2d, max %2d, line %s\n", digits[0], digits[len(digits) - 1], line)
 		sum += digits[0] * 10 + digits[len(digits) - 1]
 	}
 
