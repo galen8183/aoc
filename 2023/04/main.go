@@ -20,12 +20,11 @@ func main() {
 	scanner := bufio.NewScanner(input)
 	cards := parse(*scanner)
 
-	// part1(cards)
+	part1(cards)
 	part2(cards)
 }
 
 type Card struct {
-	CardNum int
 	WinNums []int
 	OwnNums []int
 	Wins    int
@@ -81,7 +80,7 @@ func parse(scanner bufio.Scanner) (cards []Card) {
 
 	for scanner.Scan() {
 		var win, own bool
-		card := Card{CardNum: cardNum, Count: 1}
+		card := Card{Count: 1}
 		cardNum++
 
 		for _, field := range(strings.Split(scanner.Text(), " ")) {
