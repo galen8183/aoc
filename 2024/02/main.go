@@ -73,7 +73,6 @@ func part2(reps [][]int) {
 	var safe int
 OUTER:
 	for _, rep := range(reps) {
-		log.Println("checking", rep)
 		var last, unsafe int
 		var inc bool
 		for i, lvl := range(rep) {
@@ -83,27 +82,22 @@ OUTER:
 			}
 			diff := math.Abs(float64(last - lvl))
 			if diff < 1 || diff > 3 {
-				log.Println("bad diff")
 				unsafe++
 			}
 			if i == 1 {
 				inc = lvl > last
 			} else if inc && lvl < last {
-				log.Println("should inc, got", last, lvl)
 				unsafe++
 			} else if !inc && lvl > last {
-				log.Println("should dec, got", last, lvl)
 				unsafe++
 			}
 			last = lvl
 		}
 
 		if unsafe > 1 {
-			log.Println("unsafe, skipping")
 			continue OUTER
 		}
 
-		log.Println("safe report")
 		safe++
 		unsafe = 0
 	}
