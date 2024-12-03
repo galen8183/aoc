@@ -42,17 +42,14 @@ func part2(in []byte) {
 	for _, i := range(insts) {
 		if string(i) == "do()" {
 			do = true
-			continue
-		}
-		if !do || string(i) == "don't()" {
+		} else if string(i) == "don't()" {
 			do = false
-			continue
+		} else if do {
+			ii := strings.Split(string(i[4:len(i)-1]), ",")
+			n, _ := strconv.Atoi(ii[0])
+			m, _ := strconv.Atoi(ii[1])
+			sum += n * m
 		}
-
-		ii := strings.Split(string(i[4:len(i)-1]), ",")
-		n, _ := strconv.Atoi(ii[0])
-		m, _ := strconv.Atoi(ii[1])
-		sum += n * m
 	}
 	fmt.Println(sum)
 }

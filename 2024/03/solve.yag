@@ -1,0 +1,21 @@
+{{/* $in := (dbGet 0 "aoc").Value */}}
+{{ $in := `xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))` }}
+{{ $in = reFindAll `mul\(\d+,\d+\)|do(?:n't)?\(\)` $in }}
+{{ $p1 := 0 }} {{ $p2 := 0 }}
+{{ $do := true }}
+{{ range $in }}
+	{{- $n := 0 }}
+	{{- if hasPrefix . "mul" }}
+		{{- $nums := reFindAll `\d+` . }}
+		{{- $n = mult (index $nums 0) (index $nums 1) }}
+		{{- $p1 = add $p1 $n }}
+		{{- if $do }}
+			{{- $p2 = add $p2 $n }}
+		{{- end }}
+	{{- else }}
+		{{- $do = eq . "do()" }}
+	{{- end -}}
+{{ end }}
+
+Part 1: {{ $p1 }}
+Part 2: {{ $p2 }}
