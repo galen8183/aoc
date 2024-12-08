@@ -1,0 +1,27 @@
+{{/* $in := (dbGet 0 "aoc").Value */}}
+{{ $in := `3   4
+4   3
+2   5
+1   3
+3   9
+3   3`}}
+{{ $col1 := cslice }}
+{{ $col2 := cslice }}
+{{ range split $in "\n" }}
+	{{- $line := split . "   " }}
+	{{- $col1 = index $line 0 | toInt | $col1.Append }}
+	{{- $col2 = index $line 1 | toInt | $col2.Append -}}
+{{ end }}
+
+{{ $col1 = sort $col1 }}
+{{ $col2 = sort $col2 }}
+{{ $sum := 0 }}
+{{ range len $col1 }}
+	{{- $n := sub (index $col1 .) (index $col2 .) }}
+	{{- if lt $n 0 }}
+		{{- $n = mult $n -1 }}
+	{{- end }}
+	{{- $sum = add $sum $n -}}
+{{ end }}
+
+{{ $sum }}
