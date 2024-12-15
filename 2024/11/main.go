@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"math"
 	"os"
 	"strings"
 	"strconv"
@@ -16,39 +15,60 @@ func main() {
 		log.Fatal(err)
 	}
 
-	var stones []int
-	for _, n := range(strings.Fields(string(input))) {
-		m, _ := strconv.Atoi(n)
-		stones = append(stones, m)
-	}
+	stones := parse(input)
 	solve(stones, 25)
 	solve(stones, 75)
 }
 
-func solve(st []int, blinks int) {
-	fmt.Println(blinkAll(st, blinks))
+func solve(stones []int, blinks int) {
+	var sum int
+	for _, st := range(stones) {
+		n := blinkN(st, blinks)
+		sum += n
+	}
+	fmt.Println(sum)
 }
 
-func blinkAll(st []int, blinks int) (sum int) {
-	if blinks <= 0 {
-		return len(st)
+var cache = make(map[[2]int]int)
+
+func blinkN(stone, blinks int) int {
+	if cached, ok := cache[[2]int{stone, blinks}]; ok {
+		return cached
 	}
 
-	for _, s := range(st) {
-		sum += blinkAll(blink(s), blinks-1)
+	if blinks == 1 {
+		n := len(blink(stone))
+		cache[[2]int{stone, blinks}] = n
+		return n
 	}
-	return
+
+	var n int
+	for _, st := range(blink(stone)) {
+		m := blinkN(st, blinks-1)
+		cache[[2]int{st, blinks-1}] = m
+		n += m
+	}
+	return n
 }
 
-func blink(s int) []int {
-	if s == 0 {
+func blink(st int) []int {
+	if st == 0 {
 		return []int{1}
 	}
-	n := strconv.Itoa(s)
-	if math.Mod(float64(len(n)), 2) == 0 {
+	n := strconv.Itoa(st)
+	if len(n) % 2 == 0 {
 		i, _ := strconv.Atoi(n[:len(n)/2])
 		j, _ := strconv.Atoi(n[len(n)/2:])
 		return []int{i, j}
 	}
-	return []int{s * 2024}
+	return []int{st * 2024}
+}
+
+func parse(input []byte) (stones []int) {
+	in := strings.Fields(string(input))
+	for _, n := range(in) {
+		stone, _ := strconv.Atoi(n)
+		stones = append(stones, stone)
+	}
+	return
 }
